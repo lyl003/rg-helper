@@ -134,3 +134,20 @@ export interface EarnedBadge extends BadgeDefinition {
   earned: boolean;
   progressLabel?: string;
 }
+
+// --- Class Journal ("My Classes") ---
+
+export interface ClassJournalEntry {
+  id: string;
+  /** Local date key (YYYY-MM-DD) the class happened on. */
+  date: string;
+  /** Optional label, e.g. class name, coach, or studio. */
+  className?: string;
+  notes: string;
+  /** SkillCatalogItem ids worked on/learned in this class. */
+  skillIds: string[];
+  /** WorkoutCatalogItem ids (warm-up/flexibility/strength/skill drills) done in this class. */
+  exerciseIds: string[];
+  createdAt: string;
+  updatedAt: string;
+}

@@ -9,14 +9,7 @@ import { useWorkout } from "@/hooks/useWorkout";
 import { useProfile } from "@/hooks/useProfile";
 import { getRoutineForLevel } from "@/lib/content/routineTemplates";
 import { formatMinutesRange, getRoutineLevel, isCompleted, isIncluded, sumEstimatedMinutes } from "@/lib/routine";
-import { WorkoutCategory } from "@/lib/types";
-
-const SECTIONS: Array<{ category: WorkoutCategory; label: string }> = [
-  { category: "warmup", label: "Warm Up" },
-  { category: "flexibility", label: "Flexibility" },
-  { category: "strength", label: "Strength" },
-  { category: "skills", label: "Skill Practice" },
-];
+import { WORKOUT_CATEGORY_LABELS, WORKOUT_CATEGORY_ORDER } from "@/lib/categoryLabels";
 
 export default function WorkoutChecklist() {
   const { catalog, itemState, toggleIncluded, toggleCompleted, resetSession, loading: workoutLoading } = useWorkout();
@@ -53,10 +46,10 @@ export default function WorkoutChecklist() {
         <ResetSessionButton onReset={resetSession} />
       </div>
 
-      {SECTIONS.map(({ category, label }) => (
+      {WORKOUT_CATEGORY_ORDER.map((category) => (
         <WorkoutSection
           key={category}
-          label={label}
+          label={WORKOUT_CATEGORY_LABELS[category]}
           items={catalog.filter((item) => item.category === category)}
           itemState={itemState}
           template={template}

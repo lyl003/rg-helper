@@ -11,7 +11,7 @@ export default function WelcomeBanner() {
   if (!profile) {
     return (
       <div className="rounded-2xl bg-gradient-to-br from-brand-pink/15 via-brand-purple/15 to-brand-teal/15 p-6 text-center">
-        <h1 className="text-2xl font-extrabold">Welcome to RG Helper! ✨</h1>
+        <h1 className="text-2xl font-extrabold">Welcome to My RG Journal! ✨</h1>
         <p className="mt-2 text-foreground/70">
           Your friendly companion for learning rhythmic gymnastics — track equipment, workouts, and
           skills as you grow.

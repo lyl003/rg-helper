@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RG Helper",
+  title: "My RG Journal",
   description: "A friendly companion for entry-level rhythmic gymnastics learners.",
 };
 

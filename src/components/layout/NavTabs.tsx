@@ -6,8 +6,9 @@ import ProfileAvatar from "@/components/layout/ProfileAvatar";
 
 const TABS = [
   { href: "/", label: "Home", emoji: "🏠" },
-  { href: "/exercises", label: "Workout", emoji: "🏃" },
+  { href: "/classes", label: "Classes", emoji: "📔" },
   { href: "/skills", label: "Skills", emoji: "🌟" },
+  { href: "/exercises", label: "Workout", emoji: "🏃" },
   { href: "/equipment", label: "Equipment", emoji: "🎀" },
 ] as const;
 
@@ -23,7 +24,7 @@ export default function NavTabs() {
               href="/"
               className="mr-2 shrink-0 whitespace-nowrap text-lg font-extrabold text-brand-purple"
             >
-              RG Helper ✨
+              My RG Journal ✨
             </Link>
             <nav className="flex gap-1 sm:gap-2">
               {TABS.map((tab) => {

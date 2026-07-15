@@ -1,4 +1,5 @@
 import {
+  ClassJournalEntry,
   EarnedBadge,
   EquipmentOwnershipEntry,
   Profile,
@@ -32,4 +33,9 @@ export interface DataStore {
   saveSkillPhoto(skillId: string, photoDataUrl: string | undefined): Promise<void>;
 
   getBadges(): Promise<EarnedBadge[]>;
+
+  getClassEntries(): Promise<Record<string, ClassJournalEntry>>;
+  /** Upsert — used for both creating and editing an entry. */
+  saveClassEntry(entry: ClassJournalEntry): Promise<void>;
+  deleteClassEntry(id: string): Promise<void>;
 }

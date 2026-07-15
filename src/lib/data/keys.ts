@@ -4,4 +4,5 @@ export const STORAGE_KEYS = {
   workout: "rg-helper:workout:v2",
   workoutHistory: "rg-helper:workout-history:v1",
   skills: "rg-helper:skills:v1",
+  classes: "rg-helper:classes:v1",
 } as const;

@@ -1,6 +1,7 @@
 import { computeEarnedBadges } from "@/lib/badges";
 import { SKILLS_CATALOG } from "@/lib/content/skillsCatalog";
 import {
+  ClassJournalEntry,
   EarnedBadge,
   EquipmentOwnershipEntry,
   Profile,
@@ -132,5 +133,21 @@ export const localStorageStore: DataStore = {
   async getBadges(): Promise<EarnedBadge[]> {
     const progress = await this.getSkills();
     return computeEarnedBadges(SKILLS_CATALOG, progress);
+  },
+
+  async getClassEntries() {
+    return safeGet<Record<string, ClassJournalEntry>>(STORAGE_KEYS.classes, {});
+  },
+
+  async saveClassEntry(entry) {
+    const current = await this.getClassEntries();
+    current[entry.id] = entry;
+    safeSet(STORAGE_KEYS.classes, current);
+  },
+
+  async deleteClassEntry(id) {
+    const current = await this.getClassEntries();
+    delete current[id];
+    safeSet(STORAGE_KEYS.classes, current);
   },
 };
