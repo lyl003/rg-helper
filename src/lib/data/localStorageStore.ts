@@ -5,10 +5,12 @@ import {
   EquipmentOwnershipEntry,
   Profile,
   SkillProgressEntry,
-  WorkoutCompletionEntry,
+  WorkoutHistoryDay,
+  WorkoutItemState,
 } from "@/lib/types";
 import { STORAGE_KEYS } from "@/lib/data/keys";
 import { DataStore } from "@/lib/data/types";
+import { todayKey } from "@/lib/date";
 
 function safeGet<T>(key: string, fallback: T): T {
   if (typeof window === "undefined") return fallback;
@@ -49,22 +51,56 @@ export const localStorageStore: DataStore = {
     safeSet(STORAGE_KEYS.equipment, current);
   },
 
-  async getWorkoutCompletion() {
-    return safeGet<Record<string, WorkoutCompletionEntry>>(STORAGE_KEYS.workout, {});
+  async getWorkoutState() {
+    return safeGet<Record<string, WorkoutItemState>>(STORAGE_KEYS.workout, {});
   },
 
-  async saveWorkoutCompletion(itemId, completed) {
-    const current = await this.getWorkoutCompletion();
+  async saveWorkoutItemIncluded(itemId, included) {
+    const current = await this.getWorkoutState();
     current[itemId] = {
       itemId,
-      completed,
-      completedAt: completed ? new Date().toISOString() : null,
+      included,
+      completed: current[itemId]?.completed ?? false,
+      completedAt: current[itemId]?.completedAt ?? null,
     };
     safeSet(STORAGE_KEYS.workout, current);
   },
 
+  async saveWorkoutItemCompleted(itemId, completed) {
+    const current = await this.getWorkoutState();
+    current[itemId] = {
+      itemId,
+      included: current[itemId]?.included ?? true,
+      completed,
+      completedAt: completed ? new Date().toISOString() : null,
+    };
+    safeSet(STORAGE_KEYS.workout, current);
+
+    // Mirror into the permanent history log so "Start a new session" never erases it.
+    const key = todayKey();
+    const history = await this.getWorkoutHistory();
+    const idSet = new Set(history[key]?.completedItemIds ?? []);
+    if (completed) idSet.add(itemId);
+    else idSet.delete(itemId);
+
+    if (idSet.size > 0) {
+      history[key] = { date: key, completedItemIds: Array.from(idSet) };
+    } else {
+      delete history[key];
+    }
+    safeSet(STORAGE_KEYS.workoutHistory, history);
+  },
+
   async resetWorkoutSession() {
-    safeSet(STORAGE_KEYS.workout, {});
+    const current = await this.getWorkoutState();
+    const cleared = Object.fromEntries(
+      Object.entries(current).map(([id, state]) => [id, { ...state, completed: false, completedAt: null }])
+    );
+    safeSet(STORAGE_KEYS.workout, cleared);
+  },
+
+  async getWorkoutHistory() {
+    return safeGet<Record<string, WorkoutHistoryDay>>(STORAGE_KEYS.workoutHistory, {});
   },
 
   async getSkills() {

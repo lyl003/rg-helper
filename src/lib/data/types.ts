@@ -3,7 +3,8 @@ import {
   EquipmentOwnershipEntry,
   Profile,
   SkillProgressEntry,
-  WorkoutCompletionEntry,
+  WorkoutHistoryDay,
+  WorkoutItemState,
 } from "@/lib/types";
 
 /**
@@ -18,9 +19,13 @@ export interface DataStore {
   getEquipmentOwnership(): Promise<Record<string, EquipmentOwnershipEntry>>;
   saveEquipmentStatus(itemId: string, owned: boolean): Promise<void>;
 
-  getWorkoutCompletion(): Promise<Record<string, WorkoutCompletionEntry>>;
-  saveWorkoutCompletion(itemId: string, completed: boolean): Promise<void>;
+  getWorkoutState(): Promise<Record<string, WorkoutItemState>>;
+  saveWorkoutItemIncluded(itemId: string, included: boolean): Promise<void>;
+  saveWorkoutItemCompleted(itemId: string, completed: boolean): Promise<void>;
+  /** Clears today's checkmarks only — routine customization (included) is preserved. */
   resetWorkoutSession(): Promise<void>;
+  /** Permanent per-day log of completions, for the calendar view. Never cleared by resetWorkoutSession. */
+  getWorkoutHistory(): Promise<Record<string, WorkoutHistoryDay>>;
 
   getSkills(): Promise<Record<string, SkillProgressEntry>>;
   saveSkillLearned(skillId: string, learned: boolean): Promise<void>;

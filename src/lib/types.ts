@@ -50,21 +50,46 @@ export interface EquipmentOwnershipEntry {
   updatedAt: string;
 }
 
-// --- Exercises ("Today's Workout") ---
+// --- Exercises ("My Routine") ---
 
-export type WorkoutCategory = "warmup" | "stretch";
+export type WorkoutCategory = "warmup" | "flexibility" | "strength" | "skills";
 
 export interface WorkoutCatalogItem {
   id: string;
   name: string;
   description: string;
   category: WorkoutCategory;
+  /** Optional sub-heading to cluster related exercises within a category (e.g. "Leg Flexibility"). */
+  subgroup?: string;
+  /** [min, max] minutes this exercise typically takes. */
+  estimatedMinutes: [number, number];
 }
 
-export interface WorkoutCompletionEntry {
+export interface RoutineTemplate {
+  level: ExperienceLevel;
+  label: string;
+  /** Ids of catalog exercises included by default for this level's routine. */
+  itemIds: string[];
+}
+
+export interface WorkoutItemState {
   itemId: string;
+  /** Whether this exercise is part of the user's active (possibly customized) routine. */
+  included: boolean;
+  /** Whether it's been checked off in the current session. */
   completed: boolean;
   completedAt: string | null;
+}
+
+/**
+ * Permanent per-day record of what was completed, keyed by local date
+ * (YYYY-MM-DD). Unlike WorkoutItemState.completed (today's checklist,
+ * cleared by "Start a new session"), this is never cleared — it's what
+ * powers the calendar view.
+ */
+export interface WorkoutHistoryDay {
+  date: string;
+  completedItemIds: string[];
 }
 
 // --- Skills Library ---

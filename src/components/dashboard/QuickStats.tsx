@@ -4,21 +4,28 @@ import Link from "next/link";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useWorkout } from "@/hooks/useWorkout";
 import { useSkills } from "@/hooks/useSkills";
+import { useProfile } from "@/hooks/useProfile";
+import { getRoutineForLevel } from "@/lib/content/routineTemplates";
+import { getRoutineLevel, isCompleted, isIncluded } from "@/lib/routine";
 
 export default function QuickStats() {
   const { catalog: equipmentCatalog, ownership, loading: equipmentLoading } = useEquipment();
-  const { catalog: workoutCatalog, completion, loading: workoutLoading } = useWorkout();
+  const { catalog: workoutCatalog, itemState, loading: workoutLoading } = useWorkout();
   const { catalog: skillsCatalog, progress, loading: skillsLoading } = useSkills();
+  const { profile, loading: profileLoading } = useProfile();
 
-  if (equipmentLoading || workoutLoading || skillsLoading) return null;
+  if (equipmentLoading || workoutLoading || skillsLoading || profileLoading) return null;
 
   const ownedCount = equipmentCatalog.filter((item) => ownership[item.id]?.owned).length;
-  const doneCount = workoutCatalog.filter((item) => completion[item.id]?.completed).length;
   const learnedCount = skillsCatalog.filter((skill) => progress[skill.id]?.learned).length;
+
+  const { template } = getRoutineForLevel(getRoutineLevel(profile));
+  const includedWorkoutItems = workoutCatalog.filter((item) => isIncluded(item.id, itemState, template));
+  const doneCount = includedWorkoutItems.filter((item) => isCompleted(item.id, itemState)).length;
 
   const stats = [
     { href: "/equipment", emoji: "🎀", label: "Equipment owned", value: `${ownedCount}/${equipmentCatalog.length}` },
-    { href: "/exercises", emoji: "🧘", label: "Done today", value: `${doneCount}/${workoutCatalog.length}` },
+    { href: "/exercises", emoji: "🏃", label: "Done today", value: `${doneCount}/${includedWorkoutItems.length}` },
     { href: "/skills", emoji: "🌟", label: "Skills learned", value: `${learnedCount}/${skillsCatalog.length}` },
   ];
 
