@@ -96,13 +96,19 @@ function Shape({ itemId, color }: { itemId: string; color: string }) {
 
 interface EquipmentIllustrationProps {
   itemId: string;
+  /** Small square thumbnail for the collapsed card header, instead of the full-width banner. */
+  compact?: boolean;
 }
 
-export default function EquipmentIllustration({ itemId }: EquipmentIllustrationProps) {
+export default function EquipmentIllustration({ itemId, compact = false }: EquipmentIllustrationProps) {
   const { bg, fg } = COLORS[itemId] ?? { bg: "bg-brand-purple/10", fg: "#8b5cf6" };
   return (
-    <div className={`flex h-28 w-full items-center justify-center rounded-xl ${bg}`}>
-      <svg width="88" height="88" viewBox="0 0 88 88" aria-hidden="true">
+    <div
+      className={`flex shrink-0 items-center justify-center rounded-xl ${bg} ${
+        compact ? "h-14 w-14" : "h-28 w-full"
+      }`}
+    >
+      <svg width={compact ? 44 : 88} height={compact ? 44 : 88} viewBox="0 0 88 88" aria-hidden="true">
         <Shape itemId={itemId} color={fg} />
       </svg>
     </div>

@@ -19,9 +19,27 @@ export function useSkills() {
     await dataStore.saveSkillLearned(skillId, learned);
     skillsStore.setState((prev) => ({
       ...(prev ?? {}),
-      [skillId]: { skillId, learned, learnedAt: learned ? new Date().toISOString() : null },
+      [skillId]: {
+        skillId,
+        learned,
+        learnedAt: learned ? new Date().toISOString() : null,
+        photoDataUrl: prev?.[skillId]?.photoDataUrl,
+      },
     }));
   }, []);
 
-  return { catalog: SKILLS_CATALOG, progress: progress ?? {}, toggleLearned, loading };
+  const setSkillPhoto = useCallback(async (skillId: string, photoDataUrl: string | undefined) => {
+    await dataStore.saveSkillPhoto(skillId, photoDataUrl);
+    skillsStore.setState((prev) => ({
+      ...(prev ?? {}),
+      [skillId]: {
+        skillId,
+        learned: prev?.[skillId]?.learned ?? false,
+        learnedAt: prev?.[skillId]?.learnedAt ?? null,
+        photoDataUrl,
+      },
+    }));
+  }, []);
+
+  return { catalog: SKILLS_CATALOG, progress: progress ?? {}, toggleLearned, setSkillPhoto, loading };
 }

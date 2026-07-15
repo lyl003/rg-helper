@@ -7,7 +7,7 @@ import { useSkills } from "@/hooks/useSkills";
 import { SKILL_CATEGORY_ORDER } from "@/lib/categoryLabels";
 
 export default function SkillsLibrary() {
-  const { catalog, progress, toggleLearned, loading } = useSkills();
+  const { catalog, progress, toggleLearned, setSkillPhoto, loading } = useSkills();
 
   if (loading) {
     return <p className="text-foreground/60">Loading skills library...</p>;
@@ -37,6 +37,7 @@ export default function SkillsLibrary() {
             skills={skills}
             progress={progress}
             onToggleLearned={toggleLearned}
+            onPhotoChange={setSkillPhoto}
           />
         );
       })}

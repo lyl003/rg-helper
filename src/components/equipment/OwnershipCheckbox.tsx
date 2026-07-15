@@ -12,7 +12,7 @@ export default function OwnershipCheckbox({ owned, onToggle }: OwnershipCheckbox
         onChange={(e) => onToggle(e.target.checked)}
         className="h-4 w-4 accent-brand-pink"
       />
-      {owned ? "I own this ✅" : "Still need to buy this"}
+      {owned ? "✅ Already purchased" : "Already purchased?"}
     </label>
   );
 }

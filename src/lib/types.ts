@@ -18,6 +18,8 @@ export interface Profile {
   age: number;
   heightCm: number;
   experienceLevel: ExperienceLevel;
+  /** Downscaled data URL (see lib/image.ts) — small enough to store safely in localStorage. */
+  photoDataUrl?: string;
   createdAt: string; // ISO
   updatedAt: string; // ISO
 }
@@ -116,6 +118,8 @@ export interface SkillProgressEntry {
   skillId: string;
   learned: boolean;
   learnedAt: string | null;
+  /** Downscaled data URL (see lib/image.ts) of the gymnast doing this skill, for tracking progress. */
+  photoDataUrl?: string;
 }
 
 // --- Badges (always derived, never persisted) ---

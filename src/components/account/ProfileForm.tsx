@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { ExperienceLevel, Profile } from "@/lib/types";
 import { EXPERIENCE_LEVEL_OPTIONS } from "@/lib/experienceLevels";
+import { resizeImageFile } from "@/lib/image";
 
 interface ProfileFormProps {
   initialProfile: Profile | null;
@@ -19,8 +20,30 @@ export default function ProfileForm({ initialProfile, onSave, onCancel }: Profil
   const [experienceLevel, setExperienceLevel] = useState<ExperienceLevel>(
     initialProfile?.experienceLevel ?? "beginner"
   );
+  const [photoDataUrl, setPhotoDataUrl] = useState(initialProfile?.photoDataUrl);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handlePhotoChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = ""; // allow re-selecting the same file later
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setPhotoError("Please choose an image file.");
+      return;
+    }
+
+    try {
+      const dataUrl = await resizeImageFile(file);
+      setPhotoDataUrl(dataUrl);
+      setPhotoError(null);
+    } catch {
+      setPhotoError("Couldn't load that photo — please try a different image.");
+    }
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -48,6 +71,7 @@ export default function ProfileForm({ initialProfile, onSave, onCancel }: Profil
       age: ageNum,
       heightCm: heightNum,
       experienceLevel,
+      photoDataUrl,
       createdAt: initialProfile?.createdAt ?? now,
       updatedAt: now,
     });
@@ -59,6 +83,56 @@ export default function ProfileForm({ initialProfile, onSave, onCancel }: Profil
       onSubmit={handleSubmit}
       className="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-brand-purple/10 sm:p-6"
     >
+      <div className="mb-5 flex items-center gap-4">
+        {/* eslint-disable-next-line @next/next/no-img-element -- small local data-URL avatar, no benefit from next/image optimization */}
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          aria-label={photoDataUrl ? "Change profile photo" : "Add a profile photo"}
+          className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border-2 border-brand-purple/20 bg-brand-purple/10"
+        >
+          {photoDataUrl ? (
+            <img src={photoDataUrl} alt="" className="h-full w-full object-cover" />
+          ) : (
+            <span className="flex h-full w-full items-center justify-center text-2xl font-bold text-brand-purple">
+              {name.trim().charAt(0).toUpperCase() || "🙂"}
+            </span>
+          )}
+          <span className="absolute inset-x-0 bottom-0 bg-black/40 py-0.5 text-center text-[10px] font-semibold text-white">
+            Edit
+          </span>
+        </button>
+
+        <div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-sm font-semibold text-brand-purple hover:underline"
+            >
+              {photoDataUrl ? "Change photo" : "Add a photo"}
+            </button>
+            {photoDataUrl && (
+              <button
+                type="button"
+                onClick={() => setPhotoDataUrl(undefined)}
+                className="text-sm text-foreground/50 hover:underline"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+          {photoError && <p className="mt-1 text-xs font-medium text-rose-600">{photoError}</p>}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoChange}
+            className="hidden"
+          />
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="flex flex-col gap-1 sm:col-span-2">
           <span className="text-sm font-semibold">Name</span>

@@ -29,6 +29,7 @@ export interface DataStore {
 
   getSkills(): Promise<Record<string, SkillProgressEntry>>;
   saveSkillLearned(skillId: string, learned: boolean): Promise<void>;
+  saveSkillPhoto(skillId: string, photoDataUrl: string | undefined): Promise<void>;
 
   getBadges(): Promise<EarnedBadge[]>;
 }

@@ -113,6 +113,18 @@ export const localStorageStore: DataStore = {
       skillId,
       learned,
       learnedAt: learned ? new Date().toISOString() : null,
+      photoDataUrl: current[skillId]?.photoDataUrl,
+    };
+    safeSet(STORAGE_KEYS.skills, current);
+  },
+
+  async saveSkillPhoto(skillId, photoDataUrl) {
+    const current = await this.getSkills();
+    current[skillId] = {
+      skillId,
+      learned: current[skillId]?.learned ?? false,
+      learnedAt: current[skillId]?.learnedAt ?? null,
+      photoDataUrl,
     };
     safeSet(STORAGE_KEYS.skills, current);
   },
