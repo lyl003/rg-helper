@@ -1,0 +1,27 @@
+"use client";
+
+import { useCallback, useSyncExternalStore } from "react";
+import { dataStore } from "@/lib/data";
+import { SKILLS_CATALOG } from "@/lib/content/skillsCatalog";
+import { SkillProgressEntry } from "@/lib/types";
+import { createSharedResource } from "@/hooks/createSharedResource";
+
+const skillsStore = createSharedResource<Record<string, SkillProgressEntry> | null>(
+  () => dataStore.getSkills(),
+  null
+);
+
+export function useSkills() {
+  const progress = useSyncExternalStore(skillsStore.subscribe, skillsStore.getSnapshot, () => null);
+  const loading = progress === null;
+
+  const toggleLearned = useCallback(async (skillId: string, learned: boolean) => {
+    await dataStore.saveSkillLearned(skillId, learned);
+    skillsStore.setState((prev) => ({
+      ...(prev ?? {}),
+      [skillId]: { skillId, learned, learnedAt: learned ? new Date().toISOString() : null },
+    }));
+  }, []);
+
+  return { catalog: SKILLS_CATALOG, progress: progress ?? {}, toggleLearned, loading };
+}
