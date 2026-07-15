@@ -12,7 +12,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🩱",
     description: "The snug, stretchy outfit worn for practice.",
     material: "Nylon/spandex or polyester/spandex blend.",
-    funFact: "A simple everyday leotard is all you need — sparkly ones can wait!",
     guidanceByLevel: {
       entry: `Use the brand's height/age size chart rather than guessing — RG leotards run snug on purpose. ${BRAND_GUIDANCE}`,
     },
@@ -24,7 +23,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🩰",
     description: "Small pads that protect the foot while turning.",
     material: "Suede, leather, or elastic fabric with a suede sole patch.",
-    funFact: "They only cover part of the foot, so pointed-foot flexibility isn't blocked.",
     guidanceByLevel: {
       entry: `Size these to fit snugly like a sock, not like a regular shoe. ${BRAND_GUIDANCE}`,
     },
@@ -39,7 +37,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🪢",
     description: "Used for jumps, swings, and building rhythm.",
     material: "Hemp, cotton, or synthetic fiber.",
-    funFact: "Ropes aren't sold pre-cut — gymnasts trim them to their own height!",
     guidanceByLevel: {
       entry: `Rope isn't sized by a chart — it's sized to the gymnast. ${BRAND_GUIDANCE} A soft cotton/poly rope is a good, inexpensive first rope.`,
     },
@@ -52,7 +49,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "⭕",
     description: "A ring apparatus for swings, rolls, and rotations.",
     material: "Wood or plastic (PVC training hoops are lighter for kids).",
-    funFact: "Light beginner hoops can flex a little — that's normal.",
     guidanceByLevel: { entry: BRAND_GUIDANCE },
   },
   {
@@ -63,7 +59,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🔴",
     description: "A soft ball for bounces, rolls, and catches.",
     material: "Rubber or synthetic gel material.",
-    funFact: "In competition the ball should rest on the palm, never be gripped.",
     guidanceByLevel: {
       entry: `Younger or smaller beginners often start with a lighter, slightly smaller training ball. ${BRAND_GUIDANCE}`,
     },
@@ -76,7 +71,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🎳",
     description: "A pair used for mills, swings, and throws.",
     material: "Wood or synthetic material.",
-    funFact: "Clubs are tricky at first because each hand often moves differently.",
     guidanceByLevel: {
       entry: `Look for a lightweight beginner pair first — heavier clubs are harder to control while learning. ${BRAND_GUIDANCE}`,
     },
@@ -89,7 +83,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🎗️",
     description: "A fabric ribbon on a stick for spirals and circles.",
     material: "Satin or synthetic fabric on a wood or synthetic stick.",
-    funFact: "A tangled ribbon mid-routine is the most common beginner mistake.",
     guidanceByLevel: {
       entry: `Beginners often start with a shorter, narrower practice ribbon (roughly 4-5m). ${BRAND_GUIDANCE}`,
     },
@@ -105,7 +98,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🧱",
     description: "Helps support and deepen stretches.",
     material: "EVA foam or cork.",
-    funFact: "Even elite gymnasts use blocks to safely build flexibility.",
     guidanceByLevel: {
       entry: "Any standard yoga block works well — foam is lighter and cheaper, cork is firmer and more durable.",
       competition: "Any standard yoga block works well — foam is lighter and cheaper, cork is firmer and more durable.",
@@ -118,7 +110,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🪵",
     description: "Used to relax and loosen tight muscles.",
     material: "Dense EVA foam.",
-    funFact: "A few minutes of rolling before stretching can make splits feel easier.",
     guidanceByLevel: {
       entry: "A medium-density roller (not too firm) is most comfortable for young beginners just starting out.",
       competition: "A medium-density roller (not too firm) is most comfortable for young beginners just starting out.",
@@ -131,7 +122,6 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "➰",
     description: "Loop bands for extra strength conditioning.",
     material: "Natural or synthetic rubber.",
-    funFact: "Great for warming up shoulders before ribbon or clubs work.",
     guidanceByLevel: {
       entry: "Look for a light-resistance loop band to start — inexpensive and available at any sporting goods store.",
       competition: "Look for a light-resistance loop band to start — inexpensive and available at any sporting goods store.",
@@ -144,10 +134,33 @@ export const EQUIPMENT_CATALOG: EquipmentCatalogItem[] = [
     emoji: "🧵",
     description: "A long strap that assists deep split stretches.",
     material: "Woven cotton or nylon webbing.",
-    funFact: "Many coaches build these straps into their gymnasts' daily stretch routine.",
     guidanceByLevel: {
       entry: "A simple stretching strap with loops along its length makes split and flexibility work much easier.",
       competition: "A simple stretching strap with loops along its length makes split and flexibility work much easier.",
+    },
+  },
+  {
+    id: "ankle-weights",
+    category: "exercise",
+    name: "Ankle Weights",
+    emoji: "🏋️",
+    description: "Light weights worn on the ankles to build leg strength for leaps and kicks.",
+    material: "Neoprene or fabric shell with sand or iron filler.",
+    guidanceByLevel: {
+      entry: "Start very light (0.5-1kg per ankle) — too heavy too soon can strain a young gymnast's joints. Only use during conditioning, never during actual skill practice.",
+      competition: "Start very light (0.5-1kg per ankle) — too heavy too soon can strain a young gymnast's joints. Only use during conditioning, never during actual skill practice.",
+    },
+  },
+  {
+    id: "knee-protector",
+    category: "exercise",
+    name: "Knee Protectors",
+    emoji: "🛡️",
+    description: "Cushioned pads worn on the knees to protect joints during floor work and kneeling positions.",
+    material: "Foam padding with a stretch fabric or neoprene sleeve.",
+    guidanceByLevel: {
+      entry: "Look for a low-profile pad that stays put during rolls — thin gel or foam sleeves work well and won't restrict movement.",
+      competition: "Look for a low-profile pad that stays put during rolls — thin gel or foam sleeves work well and won't restrict movement.",
     },
   },
 

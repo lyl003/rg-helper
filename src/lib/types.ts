@@ -37,7 +37,6 @@ export interface EquipmentCatalogItem {
   emoji: string;
   description: string;
   material: string;
-  funFact?: string;
   guidanceByLevel: Partial<Record<EquipmentLevel, string>>;
 }
 

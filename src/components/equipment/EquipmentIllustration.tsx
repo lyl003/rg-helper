@@ -10,6 +10,8 @@ const COLORS: Record<string, { bg: string; fg: string }> = {
   "foam-roller": { bg: "bg-brand-teal/10", fg: "#14b8a6" },
   "resistance-bands": { bg: "bg-brand-pink/10", fg: "#ec4899" },
   "stretch-band": { bg: "bg-brand-purple/10", fg: "#8b5cf6" },
+  "ankle-weights": { bg: "bg-brand-pink/10", fg: "#ec4899" },
+  "knee-protector": { bg: "bg-brand-purple/10", fg: "#8b5cf6" },
   "gym-bag": { bg: "bg-brand-teal/10", fg: "#14b8a6" },
 };
 
@@ -80,6 +82,24 @@ function Shape({ itemId, color }: { itemId: string; color: string }) {
           <path d="M24 38v12" strokeWidth="4" />
           <path d="M44 38v12" strokeWidth="4" />
           <path d="M64 38v12" strokeWidth="4" />
+        </g>
+      );
+    case "ankle-weights":
+      return (
+        <g fill={color} fillOpacity="0.85">
+          <rect x="10" y="34" width="30" height="14" rx="7" />
+          <circle cx="25" cy="41" r="4" fill="white" fillOpacity="0.7" />
+          <rect x="48" y="34" width="30" height="14" rx="7" />
+          <circle cx="63" cy="41" r="4" fill="white" fillOpacity="0.7" />
+        </g>
+      );
+    case "knee-protector":
+      return (
+        <g fill={color} fillOpacity="0.85">
+          <rect x="10" y="24" width="28" height="40" rx="10" />
+          <circle cx="24" cy="44" r="6" fill="white" fillOpacity="0.7" />
+          <rect x="50" y="24" width="28" height="40" rx="10" />
+          <circle cx="64" cy="44" r="6" fill="white" fillOpacity="0.7" />
         </g>
       );
     case "gym-bag":

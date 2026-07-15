@@ -45,18 +45,10 @@ export default function EquipmentCard({ item, ownership, profile, level, onToggl
         <div className="space-y-4 border-t border-brand-purple/10 px-4 pb-4 pt-4">
           <p className="text-sm text-foreground/70">{item.description}</p>
 
-          <div>
-            <p className="text-xs text-foreground/50">
-              <span className="font-semibold text-foreground/70">Material: </span>
-              {item.material}
-            </p>
-            {item.funFact && (
-              <p className="mt-1 text-xs text-foreground/50">
-                <span className="font-semibold text-foreground/70">Fun fact: </span>
-                {item.funFact}
-              </p>
-            )}
-          </div>
+          <p className="text-xs text-foreground/50">
+            <span className="font-semibold text-foreground/70">Material: </span>
+            {item.material}
+          </p>
 
           {item.apparatusType && <SizingBox apparatusType={item.apparatusType} profile={profile} />}
 
